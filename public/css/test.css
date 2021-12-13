@@ -1,0 +1,15 @@
+div{
+    width: 3em;
+    height: 3em;
+    background-color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    width: 100vw;
+    hEIGHT: 10vh;
+    Display: flex;
+    Justify-content: center;
+    align-items: center;
+}

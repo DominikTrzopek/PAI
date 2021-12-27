@@ -7,4 +7,5 @@ $path = parse_url($path,PHP_URL_PATH);
 
 Routing::get('index','DefaultController');
 Routing::get('mainPage','DefaultController');
+Routing::get('createAccount','DefaultController');
 Routing::run($path);

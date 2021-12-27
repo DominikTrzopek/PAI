@@ -22,8 +22,8 @@ body{
     background: #2b242469 0% 0% no-repeat padding-box;
     box-shadow: inset 0px 3px 6px #2d1b1b49;
     border: 1px solid #707070;
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     
 }
 
@@ -34,10 +34,25 @@ form{
     z-index: 10;
 }
 
-#logo{
-    max-width: 80%;
-    padding: 3em;
+p{
+    font-size: 30px;
+    text-align: center;
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+    color: blanchedalmond;
+    padding: 1em;
+    margin: 0;
+ 
+}
 
+#logo{
+    width: 80%;
+    padding: 3em;
+}
+
+#logo2{
+    width: 50%;
+    padding: 1em;
 }
 
 button{
@@ -52,6 +67,7 @@ button{
     margin: 1em;
 
 }
+
 
 input{
     background-color: transparent;
@@ -70,6 +86,10 @@ input{
 @media only screen and (max-device-width:420px){
     .login-container{
         width: 100%;
+    }
+
+    p{
+        font-size: 60px;
     }
 
     *{

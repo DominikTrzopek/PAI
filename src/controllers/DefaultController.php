@@ -13,4 +13,9 @@ class DefaultController extends AppController{
         $this->render('mainPage');
 
     }
+
+    public function createAccount(){
+        $this->render('createAccount');
+
+    }
 }

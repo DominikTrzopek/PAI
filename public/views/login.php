@@ -5,12 +5,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="login-container">           
-            <form>
+        <div class="login-container">
+            <form action="login" method="POST">
                 <img src="public/img/logo.svg" id="logo">
+                <div class="messages">
+                    <?php
+                        if(isset($messages)){
+                            foreach($messages as $msg)
+                                echo $msg;
+                        }
+                    ?>
+                </div>
                 <input name="email" type="text" placeholder="email">
                 <input name="password" type="password" placeholder="password">
-                <button>SIGN IN</button>
+                <button type="submit">SIGN IN</button>
                 <button>SIGN UP</button>
             </form>
         </div>

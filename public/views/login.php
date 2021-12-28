@@ -19,7 +19,7 @@
                 <input name="email" type="text" placeholder="email">
                 <input name="password" type="password" placeholder="password">
                 <button type="submit">SIGN IN</button>
-                <button>SIGN UP</button>
+                <button type="button" onclick="location.href='/createAccount';">SIGN UP</button>
             </form>
         </div>
     </div>

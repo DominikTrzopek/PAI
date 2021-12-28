@@ -112,24 +112,30 @@ header{
 }
 
 
-.log-out{
-    width: 100%;
-    padding: 1em;
-    color: white;
+.logout{
 
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-end;
+
+}
+
+.logout > button{
+
+    width: 100%;
+    background: white no-repeat padding-box;
     border: 3px solid #707070;
-    border-radius: 2em;
+    border-radius: 37px;
     opacity: 1;
-    margin-left: 0;
-    text-align: center;
-    letter-spacing: 0.7px;
-    box-sizing: border-box;
-    line-height: 1em;
+
+    color: black;
+    line-height: 2.75em;
+
 
 }
 
 .space{
-    width: 10%;
+    width: 5%;
 }
 
 nav > img{

@@ -63,7 +63,7 @@ p{
     padding: 0.5em 1em;
 }
 
-button{
+.quizButton{
     background: #FEF5838F 0% 0% no-repeat padding-box;
     border: 3px solid #707070;
     border-radius: 37px;

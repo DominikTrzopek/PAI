@@ -45,10 +45,11 @@
                 </div>
             
                 <div class="headerButton">
-                <a href="#" class="log-out">
-                    <i class="fas fa-arrow-left"></i>
-                    logout
-                </a>
+                    <form class="logout" action="logout" method="POST">
+                        <button type="submit">
+                            <i class="fas fa-arrow-left"></i> logout
+                        </button>
+                    </form>
                 </div>
 
             </header>
@@ -62,7 +63,7 @@
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>               
                     </div>
-                        <button>START</button>
+                        <button class="quizButton">START</button>
                 </div>
                 <div id="quiz 2">         
                     <div>
@@ -73,7 +74,7 @@
                        </div>
                        <p>Lorem ipsum dolor sit amet, conveniam, quis nostrud exercitation</p>
                    </div>
-                   <button>START</button>
+                   <button class="quizButton">START</button>
                </div>
                <div id="quiz 3">         
                 <div>
@@ -84,7 +85,7 @@
                    </div>
                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
                </div>
-               <button>START</button>
+               <button class="quizButton" >START</button>
             </div>
             </section>
         </main>

@@ -12,7 +12,7 @@ class QuizController extends AppController
     private $messages = [];
 
     public function createQuiz(){
-        if($this->isPost() and is_uploaded_file($_FILES['file']['tmp_name']) and $this->validate($_FILES['file'])){
+        if($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])){
 
             move_uploaded_file($_FILES['file']['tmp_name'],dirname(__DIR__).self::UPLOAD_DIRECTORY.$_FILES['file']['name']);
 
@@ -35,7 +35,7 @@ class QuizController extends AppController
             return false;
         }
 
-        if(!isset($file['type']) and !in_array($file['type'], self::SUPPORTED_TYPES)){
+        if(!isset($file['type']) or !in_array($file['type'], self::SUPPORTED_TYPES)){
             $this->messages[] = 'File type is not supported.';
             return false;
         }

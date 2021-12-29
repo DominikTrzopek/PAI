@@ -1,7 +1,7 @@
 body{
     margin: 0;
     overflow-x: hidden;
-    background: url(../img/loginPhoto.svg);
+    background: url(../img/createQuizPhoto.svg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -18,13 +18,13 @@ body{
 .login-container{
     width: 40%;
     height: 1000vh;
-    align-self: flex-end; 
+    align-self: flex-start;
     background: #2b242469 0% 0% no-repeat padding-box;
     box-shadow: inset 0px 3px 6px #2d1b1b49;
     border: 1px solid #707070;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    
+
 }
 
 form{
@@ -40,20 +40,16 @@ p{
     font-family: 'American Typewriter', serif;
     font-style: italic;
     color: blanchedalmond;
-    padding: 1em;
+    padding-top: 10%;
     margin: 0;
- 
+
 }
 
 #logo{
-    width: 80%;
-    padding: 3em;
+    width: 60%;
+    padding: 1em 3em;
 }
 
-#logo2{
-    width: 50%;
-    padding: 1em;
-}
 
 button{
     background: #FEF5838F 0% 0% no-repeat padding-box;
@@ -68,31 +64,77 @@ button{
 
 }
 
+.buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 0;
+    align-items: center;
+}
 
-input{
+.buttons2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+
+input, textarea{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid black;
     padding: 1em;
     margin: 1em;
     width: 50%;
+    color: blanchedalmond;
+
 }
 
-.goto{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-self: center;
+.customFileUpload{
+    cursor: pointer;
+
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 2px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+    padding: 0;
+
+    width: 30%;
+    color: black;
+    line-height: 3em;
+    margin: 1em;
+
+}
+
+.p2{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.file{
+    border: none;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
 }
 
 *{
     font-family:Sanvito Pro Display;
     font-size: large;
+    color: blanchedalmond;
 }
 
 @media only screen and (max-device-width:420px){
     .login-container{
         width: 100%;
+        border: none;
     }
 
     p{
@@ -102,4 +144,5 @@ input{
     *{
         font-size: 36px;
     }
+
 }

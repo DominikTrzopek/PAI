@@ -38,7 +38,7 @@
                 </div>
                 <div class="space"></div>
                 <div class="headerButton">
-                <a href="#" class="add-quiz">
+                <a href="/createQuiz" class="add-quiz">
                     <i class="fas fa-plus"></i>
                     create quiz
                 </a>

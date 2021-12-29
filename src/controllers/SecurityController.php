@@ -38,6 +38,10 @@ class SecurityController extends AppController
         $password = $_POST['password'];
         $passwordRepeat = $_POST['passwordRepeat'];
 
+        if(!$this->isPost()){
+            return $this->render('createAccount');
+        }
+
         if($password !== $passwordRepeat){
             return $this->render('createAccount',['messages'=>['password and confirmed password are not the same']]);
         }

@@ -6,6 +6,10 @@ class User
     private $password;
     private $name;
     private $surname;
+    private $id;
+
+
+
 
     public function __construct(string $email,string $password,string $name,string $surname)
     {
@@ -13,8 +17,13 @@ class User
         $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
+        $this->id = uniqid();
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
     public function getEmail(): string
     {

@@ -6,8 +6,8 @@
 <body>
 <div class="container">
     <div class="login-container">
-        <form action="addQuestion" method="POST">
-            <p>Add qustions to Your Quiz!</p>
+        <form action="editQuiz" method="POST">
+            <p>Add questions to Your Quiz!</p>
             <div class="messages">
                 <?php
                 if(isset($messages)){
@@ -18,16 +18,16 @@
             </div>
             <input name="question" type="text" placeholder="question">
             <input name="correct" type="text" placeholder="correct answer">
-            <input name="incorrect" type="text" placeholder="incorrect answer">
-            <input name="incorrect" type="text" placeholder="incorrect answer">
-            <input name="incorrect" type="text" placeholder="incorrect answer">
+            <input name="incorrect1" type="text" placeholder="incorrect answer">
+            <input name="incorrect2" type="text" placeholder="incorrect answer">
+            <input name="incorrect3" type="text" placeholder="incorrect answer">
             <div class="buttons">
                 <button>Previous</button>
                 <button>Next</button>
             </div>
             <div class="buttons2">
                 <img src="public/img/logo.svg" id="logo">
-                <button>Finish</button>
+                <button name="finish" type="submit" value="<?php echo $quiz; ?>">Finish</button>
             </div>
         </form>
     </div>

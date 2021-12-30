@@ -56,19 +56,19 @@
             <section class = quizess>
                 <div id="quiz 1">         
                      <div>
-                        <h2>Title</h2>
-                        <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
+                        <h2><?= $quiz->getName() ?></h2>
+                            <img src="public/uploads/<?= $quiz->getImage() ?>">
                         <div class="social">
-                            <i class="fas fa-users">56</i>
+                            <i class="fas fa-users"><?= $quiz->getCreator() ?></i>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>               
+                        <p><?= $quiz->getDescription() ?></p>
                     </div>
                         <button class="quizButton">START</button>
                 </div>
                 <div id="quiz 2">         
                     <div>
                        <h2>Title</h2>
-                       <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
+                            <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
                        <div class="social">
                            <i class="fas fa-users">56</i>
                        </div>
@@ -79,7 +79,7 @@
                <div id="quiz 3">         
                 <div>
                    <h2>Title</h2>
-                   <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
+                        <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
                    <div class="social">
                        <i class="fas fa-users">56</i>
                    </div>

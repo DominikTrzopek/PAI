@@ -26,7 +26,7 @@ class SecurityController extends AppController
             return $this->render('login', ['messages'=>['Incorrect password!']]);
         }
 
-        setcookie ("username",$email,time()+ 3600);
+        setcookie ("userid",$user->getId(),time()+ 3600);
 
         return $this->render('mainPage');
 

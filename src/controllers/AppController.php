@@ -22,14 +22,22 @@ class AppController{
         $templatePath = 'public/views/'.$template.'.php';
         $output = 'File not found';
 
-        if(file_exists($templatePath)){
-            extract($variables);
-            ob_start();
-            include $templatePath;
-            $output = ob_get_clean();
-        }
 
-        print $output;
+        if($template != 'login' and $template != 'createAccount'){
+            if(!isset($_SESSION['user'])){
+                $this->render('login',['messages'=>['Log in!']]);
+                return;
+            }
+        }
+            if (file_exists($templatePath)) {
+                extract($variables);
+                ob_start();
+                include $templatePath;
+                $output = ob_get_clean();
+            }
+
+            print $output;
+
 
     }
 }

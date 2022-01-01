@@ -32,7 +32,8 @@ class SecurityController extends AppController
             return $this->render('login', ['messages'=>['Incorrect password!']]);
         }
 
-        setcookie ("userid",$user->getId(),time()+ 3600);
+        session_start();
+        $_SESSION["user"] = $user->getId();
 
         return $this->render('mainPage');
 
@@ -60,13 +61,25 @@ class SecurityController extends AppController
             return $this->render('createAccount',['messages'=>['email empty']]);
         }
 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->render('createAccount',['messages'=>['Invalid email address']]);
+        }
+
+        $userRepository = new UserRepository();
+        $user = $userRepository->getUser($email);
+
+        if($user){
+            return $this->render('createAccount', ['messages' => ['User with this email already exist!']]);
+        }
+
         $password_hashed = password_hash($password,PASSWORD_DEFAULT,['cost'=>12]);
+        $userRepository->insertUser($email,$password_hashed);
 
         $this->render('login', ['messages'=>['Account created, you can log in!']]);
     }
 
     public function logout(){
-        setcookie ("username","",time()-3600);
+        unset($_SESSION["user"]);
         $this->render('login');
     }
 

@@ -18,7 +18,7 @@ class Quiz{
         $this->image = $image;
         $this->password = $password;
         $this->id = uniqid();
-        $this->creator = $_COOKIE['userid'];
+        $this->creator = $_SESSION["user"];
     }
 
     public function getCreator():string

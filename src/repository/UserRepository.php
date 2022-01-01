@@ -33,28 +33,30 @@ class UserRepository extends Repository {
     public function insertUser(string $email, string $password){
 
         $stmt = $this->database->connect()->prepare(
-            'INSERT INTO users (email, account_id)
-                VALUES (?,?) RETURNING pass_id_fk AS id;'
+            'INSERT INTO passwords (pass_hash)
+                   VALUES (?) RETURNING pass_id as id'
         );
 
         $stmt->execute([
-            $email,
-            uniqid()
+            $password
         ]);
 
         $id = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $stmt = $this->database->connect()->prepare(
-            'INSERT INTO passwords (pass_id, pass_hash)
-                   VALUES (?,?)'
+            'INSERT INTO users (email, account_id, pass_id_fk)
+                VALUES (?,?,?);'
         );
 
         $stmt->execute([
-            $id['id'],
-            $password
+            $email,
+            uniqid(),
+            $id['id']
         ]);
 
     }
+
+
 
 
 }

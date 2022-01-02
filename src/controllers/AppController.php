@@ -22,13 +22,20 @@ class AppController{
         $templatePath = 'public/views/'.$template.'.php';
         $output = 'File not found';
 
-
+        session_start();
         if($template != 'login' and $template != 'createAccount'){
             if(!isset($_SESSION['user'])){
                 $this->render('login',['messages'=>['Log in!']]);
                 return;
             }
         }
+
+        if($template != 'createQuiz' and $template != 'addQuestion'){
+            if(isset($_SESSION['quizId'])){
+                unset($_SESSION['quizId']);
+            }
+        }
+
             if (file_exists($templatePath)) {
                 extract($variables);
                 ob_start();

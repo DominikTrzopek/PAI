@@ -18,7 +18,8 @@
             </div>
             <input name="topic" type="text" placeholder="main topic">
             <input name="name" type="text" placeholder="name">
-            <input name="password" type="password" placeholder="password (optional)">
+            <input name="password" type="password" placeholder="password">
+            <input name="time" type="text" placeholder="time restriction (minutes)">
             <textarea name="description" type="text" placeholder="descryption"></textarea>
             <label class="customFileUpload">
                 <p class="p2">Upload file</p>

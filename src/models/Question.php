@@ -18,7 +18,6 @@ class Question{
         $this->incorrect1 = $incorrect1;
         $this->incorrect2 = $incorrect2;
         $this->incorrect3 = $incorrect3;
-        $this->questionId = uniqid();
     }
 
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="public/css/styleCreateQuiz.css">
-    <title>CREATE QUIZ</title>
+    <title>SHOW QUESTION</title>
 </head>
 <body>
 <div class="container">
@@ -16,13 +16,13 @@
                 }
                 ?>
             </div>
-            <input name="content" type="text" placeholder="question">
-            <input name="correct" type="text" placeholder="correct answer">
-            <input name="incorrect1" type="text" placeholder="incorrect answer">
-            <input name="incorrect2" type="text" placeholder="incorrect answer">
-            <input name="incorrect3" type="text" placeholder="incorrect answer">
+            <p> <?= $question->getContent() ?></p>
+            <p> <?= $question->getCorrect() ?></p>
+            <p> <?= $question->getIncorrect1() ?></p>
+            <p> <?= $question->getIncorrect2() ?></p>
+            <p> <?= $question->getIncorrect3() ?></p>
             <div class="buttons">
-                <button type="submit" name="previous" value="<?php echo $quiz; ?>">Previous</button>
+                <button><?= $question->getContent() ?></button>
                 <button name="add" type="submit" value="<?php echo $quiz; ?>">Add</button>
             </div>
             <div class="buttons2">

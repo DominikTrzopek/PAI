@@ -131,6 +131,14 @@ input, textarea{
     color: blanchedalmond;
 }
 
+button:hover{
+    border: 3px solid black;
+}
+
+.customFileUpload:hover{
+    border: 3px solid black;
+}
+
 @media only screen and (max-device-width:420px){
     .login-container{
         width: 100%;

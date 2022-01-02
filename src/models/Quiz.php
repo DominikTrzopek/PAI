@@ -8,18 +8,32 @@ class Quiz{
     private $id;
     private $creator;
     private $password;
+    private $time;
 
 
-    public function __construct($name, $description, $topic, $image, $password)
+    public function __construct($name, $description, $topic, $image, $time, $id,$password=null)
     {
+        session_start();
         $this->name = $name;
         $this->description = $description;
         $this->topic = $topic;
         $this->image = $image;
         $this->password = $password;
-        $this->id = uniqid();
-        $this->creator = $_SESSION["user"];
+        $this->id = $id;
+        $this->creator = $_SESSION['user'];
+        $this->time = $time;
     }
+
+    public function getTime():int
+    {
+        return $this->time;
+    }
+
+    public function setTime(int $time)
+    {
+        $this->time = $time;
+    }
+
 
     public function getCreator():string
     {

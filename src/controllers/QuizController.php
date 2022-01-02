@@ -48,12 +48,17 @@ class QuizController extends AppController
         }
         if(isset($_POST['add'])) {
             $quizId = $_POST['add'];
-            $question = new Question($quizId, $_POST['content'], $_POST['correct'], $_POST['incorrect1'], $_POST['incorrect2'], $_POST['incorrect3']);
-            $quizRepository->insertQuestion($question);
+            $question = new Question($quizId, $_POST['content']);
+            $questionId = $quizRepository->insertQuestion($question);
+            $quizRepository->insertAnswer($_POST['correct'],$questionId,1);
+            $quizRepository->insertAnswer($_POST['incorrect1'],$questionId,'false');
+            $quizRepository->insertAnswer($_POST['incorrect2'],$questionId,'false');
+            $quizRepository->insertAnswer($_POST['incorrect3'],$questionId,'false');
 
             $this->render('addQuestion', ['messages' => $this->messages,'quiz' => $quizId]);
         }
         if(isset($_POST['previous'])) {
+            //TODO fix this
             $quizId = $_POST['previous'];
             $question = $quizRepository->getQuestions($quizId);
             $this->render('showQuestion',  ['messages' => $this->messages,'question' => $question]);

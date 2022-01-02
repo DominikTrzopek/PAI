@@ -69,10 +69,10 @@ class QuizRepository extends Repository {
         );
     }
 
-    public function getQuestions(string $quizId):Question{
+    public function getQuestions(string $quizId){
         $stmt = $this->database->connect()->prepare(
-            'SELECT * from questions q, answers a
-            where q.question_id = a.question_od_fk and q.quiz_id_fk = :quizId'
+            'SELECT * from questions q
+            where q.quiz_id_fk = :quizId'
         );
 
         $stmt->bindParam(':quizId', $quizId, PDO::PARAM_STR);
@@ -80,17 +80,31 @@ class QuizRepository extends Repository {
 
         $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $qNumber = 0;
-        $question = new Question(
-            $questions[$qNumber]['quiz_id_fk'],
-            $questions[$qNumber]['content'],
-            $questions[$qNumber]['text'],
-            $questions[$qNumber+1]['text'],
-            $questions[$qNumber+2]['text'],
-            $questions[$qNumber+3]['text']
-        );
-        return $question;
+        if($questions == false){
+            return null;
+        }
+
+        return $questions;
     }
+
+    public function getAnswers(string $questionId){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * from answers a
+            where a.question_od_fk = :questionId'
+        );
+
+        $stmt->bindParam(':questionId', $questionId, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $answers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if($answers == false){
+            return null;
+        }
+
+        return $answers;
+    }
+
 
     public function insertQuestion(Question $question){
 
@@ -106,24 +120,11 @@ class QuizRepository extends Repository {
 
         $id = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $this->database->connect()->prepare(
-            'INSERT INTO answers (question_od_fk, text, is_correct)
-                   VALUES (?,?,?)'
-        );
-
-        $stmt->execute([
-            $id['id'],
-            $question->getCorrect(),
-            1
-        ]);
-
-        $this->insertAnswer($question->getIncorrect1(),$id['id']);
-        $this->insertAnswer($question->getIncorrect2(),$id['id']);
-        $this->insertAnswer($question->getIncorrect3(),$id['id']);
+        return $id['id'];
 
     }
 
-    function insertAnswer(string $str, int $id){
+    function insertAnswer(string $str, int $id, string $flag){
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO answers (question_od_fk, text, is_correct)
                    VALUES (?,?,?)'
@@ -132,7 +133,7 @@ class QuizRepository extends Repository {
         $stmt->execute([
             $id,
             $str,
-            0
+            $flag
         ]);
     }
 

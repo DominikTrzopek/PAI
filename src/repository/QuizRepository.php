@@ -45,7 +45,7 @@ class QuizRepository extends Repository {
 
     }
 
-    public function getQuiz(string $id){
+    public function getQuizFromId(string $id){
         $stmt = $this->database->connect()->prepare(
             'SELECT * FROM quizzes WHERE quiz_id = :id'
         );
@@ -68,6 +68,35 @@ class QuizRepository extends Repository {
             $quiz['time']
         );
     }
+
+    public function getQuizzes(string $userId): array{
+        $result = [];
+        $stmt = $this->database->connect()->prepare(
+            'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE (q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)'
+        );
+
+        $stmt->bindParam(':id', $userId, PDO::PARAM_STR);
+
+
+        $stmt->execute();
+        $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($quizzes as $quiz){
+            $result [] = new Quiz(
+                $quiz['name'],
+                $quiz['description'],
+                $quiz['topic'],
+                $quiz['image'],
+                $quiz['quiz_id'],
+                $quiz['creator'],
+                $quiz['time']
+            );
+        }
+        return $result;
+    }
+
+
 
     public function getQuestions(string $quizId){
         $stmt = $this->database->connect()->prepare(

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'AppController.php';
+require_once 'QuizController.php';
 require_once __DIR__.'/../models/User.php';
 require_once __DIR__.'/../repository/UserRepository.php';
 
@@ -35,7 +36,8 @@ class SecurityController extends AppController
         session_start();
         $_SESSION["user"] = $user->getId();
 
-        return $this->render('mainPage');
+        $quizController = new QuizController();
+        return $quizController->mainPage();
 
     }
 

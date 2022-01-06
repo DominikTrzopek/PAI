@@ -139,6 +139,12 @@ button:hover{
     border: 3px solid black;
 }
 
+.no-valid{
+    border: 3px solid red;
+    border-radius: 1em;
+    outline: none;
+}
+
 @media only screen and (max-device-width:420px){
     .login-container{
         width: 100%;

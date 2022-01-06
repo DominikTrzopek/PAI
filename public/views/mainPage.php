@@ -53,11 +53,12 @@
                 </div>
 
             </header>
-            <section class = quizess>
-                <div id="quiz 1">         
+            <section class = quizzes>
+                <?php foreach ($quizzes as $quiz):?>
+                <div id="quiz">
+                    <img src="public/uploads/<?= $quiz->getImage() ?>">
                      <div>
                         <h2><?= $quiz->getName() ?></h2>
-                            <img src="public/uploads/<?= $quiz->getImage() ?>">
                         <div class="social">
                             <i class="fas fa-users"><?= $quiz->getCreator() ?></i>
                         </div>
@@ -65,28 +66,7 @@
                     </div>
                         <button class="quizButton">START</button>
                 </div>
-                <div id="quiz 2">         
-                    <div>
-                       <h2>Title</h2>
-                            <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
-                       <div class="social">
-                           <i class="fas fa-users">56</i>
-                       </div>
-                       <p>Lorem ipsum dolor sit amet, conveniam, quis nostrud exercitation</p>
-                   </div>
-                   <button class="quizButton">START</button>
-               </div>
-               <div id="quiz 3">         
-                <div>
-                   <h2>Title</h2>
-                        <img src="public/img/upload/Temple-of-Saturn-Arch-Septimius-Severus-Forum.jpg">
-                   <div class="social">
-                       <i class="fas fa-users">56</i>
-                   </div>
-                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-               </div>
-               <button class="quizButton" >START</button>
-            </div>
+                <?php endforeach;?>
             </section>
         </main>
 

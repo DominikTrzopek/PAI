@@ -3,7 +3,8 @@ body{
     overflow-x: hidden;
     background: url(../img/mainPagePhoto.svg);
     background-size: cover;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .base-container {
@@ -17,6 +18,7 @@ nav{
     width: 20vw;
     height: 100%;
     background: transparent linear-gradient(180deg, #111111 0%, #535252 100%) 0% 0% no-repeat padding-box;
+    background-attachment: fixed;
 
     display: flex;
     flex-direction: column;
@@ -180,15 +182,19 @@ ul {
     font-family:Sanvito Pro Display;
 
     letter-spacing: 0.7px;
-    height: 100%;
+    height: 500%;
     margin: 0 auto;
     padding: 0;
-    width: 90%;
+    width: 100%;
+    background: transparent linear-gradient(180deg, #111111 0%, #535252 100%) 0% 0% no-repeat padding-box;
+    background-attachment: fixed;
 }
 
 li{
     text-align: left;
     margin-bottom: 1em;
+    width: 90%;
+    margin-left: 1em;
 
 }
 

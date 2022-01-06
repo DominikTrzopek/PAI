@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" type="text/css" href="public/css/styleCreateAccount.css">
+    <script type="text/javascript" src="./public/js/mark.js" defer></script>
+    <script type="text/javascript" src="./public/js/registration.js" defer></script>
     <title>CREATE ACCOUNT</title>
 </head>
 <body>
@@ -17,9 +19,9 @@
                     }
                     ?>
                 </div>
-                <input name="email" type="text" placeholder="email">
-                <input name="password" type="password" placeholder="password">
-                <input name="passwordRepeat" type="password" placeholder="confirm password">
+                <input name="email" type="text" placeholder="email" required>
+                <input name="password" type="password" placeholder="password" required>
+                <input name="passwordRepeat" type="password" placeholder="confirm password" required>
                 <button type="submit">SIGN UP</button>
                 <p>Already have account?</p>
                 <button type="button" onclick="location.href='/index';">SIGN IN</button>

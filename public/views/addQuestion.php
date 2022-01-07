@@ -16,11 +16,11 @@
                 }
                 ?>
             </div>
-            <input name="content" type="text" placeholder="question" required>
-            <input name="correct" type="text" placeholder="correct answer" required>
-            <input name="incorrect1" type="text" placeholder="incorrect answer" required>
-            <input name="incorrect2" type="text" placeholder="incorrect answer" required>
-            <input name="incorrect3" type="text" placeholder="incorrect answer" required>
+            <input name="content" type="text" placeholder="question" >
+            <input name="correct" type="text" placeholder="correct answer" >
+            <input name="incorrect1" type="text" placeholder="incorrect answer" >
+            <input name="incorrect2" type="text" placeholder="incorrect answer" >
+            <input name="incorrect3" type="text" placeholder="incorrect answer" >
             <div class="buttons">
                 <button type="submit" name="previous" value="<?php echo $quiz; ?>">Previous</button>
                 <button name="add" type="submit" value="<?php echo $quiz; ?>">Add</button>

@@ -1,0 +1,118 @@
+body{
+    margin: 0;
+    background: url(../img/answer.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.qa-container{
+    width: 70%;
+    height: 1000vh;
+    align-self: center;
+    background: #2b242469 0% 0% no-repeat padding-box;
+    box-shadow: inset 0px 3px 6px #2d1b1b49;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+p{
+    font-size: 30px;
+    text-align: center;
+    padding: 1em;
+    margin: 0;
+
+}
+
+button, p{
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+
+    width: 60%;
+    color: black;
+    line-height: 3em;
+    margin: 1em;
+
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+
+}
+
+.left, .right{
+    display: flex;
+    flex-direction: column;
+    background: transparent linear-gradient(180deg, #111111 0%, #535252 100%) 0% 0% no-repeat padding-box;
+    background-attachment: fixed;
+    height: 100%;
+    position: absolute;
+
+}
+
+.left{
+    align-self: flex-start;
+    width: 16%;
+    border-right: 0.1em solid #707070;
+}
+
+.right{
+    align-self: flex-end;
+    width: 16%;
+    border-left: 0.1em solid #707070;
+}
+
+h3 {
+    z-index: 2;
+    color: wheat;
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+    font-size: x-large;
+    justify-self: center;
+    align-self: center;
+    position: absolute;
+    bottom: 20%;
+}
+
+button:hover{
+    border: 3px solid black;
+}
+
+
+*{
+    font-family:Sanvito Pro Display;
+    font-size: large;
+}
+
+
+
+@media only screen and (max-device-width:420px){
+    .login-container{
+        width: 100%;
+    }
+
+    p{
+        font-size: 60px;
+    }
+
+    *{
+        font-size: 36px;
+    }
+}

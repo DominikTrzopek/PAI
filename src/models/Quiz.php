@@ -11,16 +11,15 @@ class Quiz{
     private $time;
 
 
-    public function __construct($name, $description, $topic, $image, $time, $id,$password=null)
+    public function __construct($name, $description, $topic, $image, $time, $id,$creator,$password=null)
     {
-        session_start();
         $this->name = $name;
         $this->description = $description;
         $this->topic = $topic;
         $this->image = $image;
         $this->password = $password;
         $this->id = $id;
-        $this->creator = $_SESSION['user'];
+        $this->creator = $creator;
         $this->time = $time;
     }
 

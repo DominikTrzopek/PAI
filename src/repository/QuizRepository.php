@@ -3,6 +3,7 @@
 require_once 'Repository.php';
 require_once __DIR__.'/../models/Quiz.php';
 require_once __DIR__.'/../models/Question.php';
+require_once __DIR__.'/../models/Answer.php';
 
 class QuizRepository extends Repository {
 
@@ -63,9 +64,9 @@ class QuizRepository extends Repository {
             $quiz['description'],
             $quiz['topic'],
             $quiz['image'],
+            $quiz['time'],
             $quiz['quiz_id'],
-            $quiz['creator'],
-            $quiz['time']
+            $quiz['creator_id']
         );
     }
 
@@ -88,9 +89,9 @@ class QuizRepository extends Repository {
                 $quiz['description'],
                 $quiz['topic'],
                 $quiz['image'],
+                $quiz['time'],
                 $quiz['quiz_id'],
-                $quiz['creator'],
-                $quiz['time']
+                $quiz['creator_id']
             );
         }
         return $result;
@@ -98,7 +99,7 @@ class QuizRepository extends Repository {
 
 
 
-    public function getQuestions(string $quizId){
+    public function getQuestions(string $quizId): array{
         $stmt = $this->database->connect()->prepare(
             'SELECT * from questions q
             where q.quiz_id_fk = :quizId'
@@ -108,15 +109,19 @@ class QuizRepository extends Repository {
         $stmt->execute();
 
         $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if($questions == false){
-            return null;
+        $result = [];
+        foreach ($questions as $question){
+            $result[] = new Question(
+                $question['quiz_id_fk'],
+                $question['content'],
+                $question['question_id']
+            );
         }
 
-        return $questions;
+        return $result;
     }
 
-    public function getAnswers(string $questionId){
+    public function getAnswers(string $questionId): array{
         $stmt = $this->database->connect()->prepare(
             'SELECT * from answers a
             where a.question_od_fk = :questionId'
@@ -125,17 +130,23 @@ class QuizRepository extends Repository {
         $stmt->bindParam(':questionId', $questionId, PDO::PARAM_STR);
         $stmt->execute();
 
+        $result = [];
+
         $answers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if($answers == false){
-            return null;
+        foreach ($answers as $answer){
+            $result[] = new Answer(
+                $answer['text'],
+                $answer['is_correct'],
+                $answer['question_od_fk']
+            );
         }
 
-        return $answers;
+        return $result;
     }
 
 
-    public function insertQuestion(Question $question){
+    public function insertQuestion(string $quizId, $content ){
 
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO questions (quiz_id_fk, content)
@@ -143,8 +154,8 @@ class QuizRepository extends Repository {
         );
 
         $stmt->execute([
-            $question->getQuizId(),
-            $question->getContent()
+            $quizId,
+            $content
         ]);
 
         $id = $stmt->fetch(PDO::FETCH_ASSOC);

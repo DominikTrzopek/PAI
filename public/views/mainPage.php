@@ -64,7 +64,9 @@
                         </div>
                         <p><?= $quiz->getDescription() ?></p>
                     </div>
-                        <button class="quizButton">START</button>
+                    <form action="startQuiz" method="GET">
+                        <button name="next" class="quizButton" value="<?php echo $quiz->getId(); ?>">START</button>
+                    </form>
                 </div>
                 <?php endforeach;?>
             </section>

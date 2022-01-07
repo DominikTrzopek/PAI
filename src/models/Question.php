@@ -5,10 +5,11 @@ class Question{
     private $questionId;
     Private $content;
 
-    public function __construct($quizId, $content)
+    public function __construct($quizId, $content, $questionId)
     {
         $this->quizId = $quizId;
         $this->content = $content;
+        $this->questionId = $questionId;
     }
 
 

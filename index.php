@@ -13,4 +13,5 @@ Routing::post('createAccount','SecurityController');
 Routing::post('logout','SecurityController');
 Routing::post('createQuiz','QuizController');
 Routing::post('editQuiz','QuizController');
+Routing::get('startQuiz','QuizController');
 Routing::run($path);

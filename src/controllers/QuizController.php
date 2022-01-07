@@ -34,7 +34,7 @@ class QuizController extends AppController
             }
 
             $password_hashed = password_hash($_POST['password'],PASSWORD_DEFAULT,['cost'=>12]);
-            $quiz = new Quiz($_POST['name'],$_POST['description'],$_POST['topic'],$_FILES['file']['name'], $_POST['time'], $_SESSION['quizId'],$password_hashed);
+            $quiz = new Quiz($_POST['name'],$_POST['description'],$_POST['topic'],$_FILES['file']['name'], $_POST['time'], $_SESSION['quizId'],$_SESSION['user'],$password_hashed);
             $quizRepository->insertQuiz($quiz);
 
             return $this->render("addQuestion", ['messages' => $this->messages,'quiz' => $quiz->getId()]);
@@ -56,8 +56,8 @@ class QuizController extends AppController
         }
         if(isset($_POST['add'])) {
             $quizId = $_POST['add'];
-            $question = new Question($quizId, $_POST['content']);
-            $questionId = $quizRepository->insertQuestion($question);
+            //$question = new Question($quizId, $_POST['content']);
+            $questionId = $quizRepository->insertQuestion($quizId, $_POST['content']);
             $quizRepository->insertAnswer($_POST['correct'],$questionId,1);
             $quizRepository->insertAnswer($_POST['incorrect1'],$questionId,'false');
             $quizRepository->insertAnswer($_POST['incorrect2'],$questionId,'false');
@@ -98,4 +98,26 @@ class QuizController extends AppController
         $quizzes = $quizRepository->getQuizzes($_SESSION['user']);
         $this->render('mainPage',['quizzes' => $quizzes]);
     }
+
+    public function startQuiz(){
+        $quizId = $_GET['next'];
+        session_start();
+        if(!isset($_SESSION['questionNumber'])){
+            $_SESSION['questionNumber'] = 0;
+        }
+        else if(isset($_GET['next'])) {
+            $_SESSION['questionNumber']++;
+        }
+        $quizRepository = new QuizRepository();
+        $questions = $quizRepository->getQuestions($quizId);
+        if($_SESSION['questionNumber'] >= count($questions)){
+            $this->render('login');
+            unset($_SESSION['questionNumber']);
+        }
+        $question = $questions[$_SESSION['questionNumber']];
+        $answers = $quizRepository->getAnswers($question->getQuestionId());
+        $this->render('doQuiz', ['question' => $question, 'answers' => $answers, 'quizId' => $quizId]);
+    }
+
+
 }

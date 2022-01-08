@@ -64,7 +64,7 @@ class QuizRepository extends Repository {
             $quiz['description'],
             $quiz['topic'],
             $quiz['image'],
-            $quiz['time'],
+            $quiz['time_restriction'],
             $quiz['quiz_id'],
             $quiz['creator_id']
         );
@@ -138,11 +138,31 @@ class QuizRepository extends Repository {
             $result[] = new Answer(
                 $answer['text'],
                 $answer['is_correct'],
-                $answer['question_od_fk']
+                $answer['question_od_fk'],
+                $answer['answer_id']
             );
         }
 
         return $result;
+    }
+
+    public function getAnswerFromId(int $id): Answer{
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * from answers a
+            where a.answer_id = :id'
+        );
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $answer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return new Answer(
+            $answer['text'],
+            $answer['is_correct'],
+            $answer['question_od_fk'],
+            $answer['answer_id']
+        );
     }
 
 
@@ -164,7 +184,7 @@ class QuizRepository extends Repository {
 
     }
 
-    function insertAnswer(string $str, int $id, string $flag){
+   public function insertAnswer(string $str, int $id, string $flag){
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO answers (question_od_fk, text, is_correct)
                    VALUES (?,?,?)'
@@ -176,6 +196,23 @@ class QuizRepository extends Repository {
             $flag
         ]);
     }
+
+    public function insertScore(string $quizId, string $userId, string $score){
+        $stmt = $this->database->connect()->prepare(
+            'INSERT INTO scores (quiz_id_fk, user_id_fk, score, date)
+                   VALUES (?,?,?,?)'
+        );
+
+        $date = new DateTime();
+
+        $stmt->execute([
+            $quizId,
+            $userId,
+            $score,
+            $date->format('Y-m-d')
+        ]);
+    }
+
 
 
 

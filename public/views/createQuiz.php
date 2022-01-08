@@ -21,7 +21,7 @@
             <input name="topic" type="text" placeholder="main topic" required>
             <input name="name" type="text" placeholder="name" required>
             <input name="password" type="password" placeholder="password" required>
-            <input name="time" type="text" placeholder="time restriction (minutes)" required>
+            <input name="time" type="text" placeholder="time restriction (seconds)" required>
             <textarea name="description" type="text" placeholder="descryption"></textarea>
             <label class="customFileUpload">
                 <p name="upladButton" class="p2">Upload file</p>

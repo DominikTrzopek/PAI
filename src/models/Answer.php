@@ -4,12 +4,21 @@ class Answer{
     private $text;
     private $isCorrect;
     private $questionId;
+    private $answerId;
 
-    public function __construct($text, $isCorrect, $questionId)
+
+
+    public function __construct($text, $isCorrect, $questionId,$answerId)
     {
         $this->text = $text;
         $this->isCorrect = $isCorrect;
         $this->questionId = $questionId;
+        $this->answerId = $answerId;
+    }
+
+    public function getAnswerId()
+    {
+        return $this->answerId;
     }
 
     public function getText():string

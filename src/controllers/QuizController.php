@@ -100,24 +100,61 @@ class QuizController extends AppController
     }
 
     public function startQuiz(){
-        $quizId = $_GET['next'];
         session_start();
+        $str = $_GET['next'];
+        list($quizId,$answerId) = explode(" ",$str);
+
         if(!isset($_SESSION['questionNumber'])){
             $_SESSION['questionNumber'] = 0;
+            $_SESSION['score'] = 0;
         }
-        else if(isset($_GET['next'])) {
+        else if(isset($_GET['next']) and $answerId != $_SESSION['lastAnswer']) {
             $_SESSION['questionNumber']++;
         }
+
+        if($answerId != null and $answerId != $_SESSION['lastAnswer']) {
+            $this->checkAnswer($answerId);
+        }
+
         $quizRepository = new QuizRepository();
+        $quiz = $quizRepository->getQuizFromId($quizId);
+        $time = $quiz->getTime();
+        setcookie("time", $time, time() + ($time + 1), "/");
         $questions = $quizRepository->getQuestions($quizId);
+        $allQuestions = count($questions);
         if($_SESSION['questionNumber'] >= count($questions)){
-            $this->render('login');
             unset($_SESSION['questionNumber']);
+            $score = $_SESSION['score'];
+            unset($_SESSION['score']);
+            $this->render('result',['score' => $score, 'all'=>$allQuestions, 'quizId' => $quizId]);
+            return;
         }
         $question = $questions[$_SESSION['questionNumber']];
         $answers = $quizRepository->getAnswers($question->getQuestionId());
-        $this->render('doQuiz', ['question' => $question, 'answers' => $answers, 'quizId' => $quizId]);
+        shuffle($answers);
+        $this->render('doQuiz', ['question' => $question, 'answers' => $answers, 'quizId' => $quizId, 'all' => $allQuestions, ]);
+
     }
 
+    function checkAnswer(int $id){
+        session_start();
+        $_SESSION['lastAnswer'] = $id;
+        $quizRepository = new QuizRepository();
+        $answer = $quizRepository->getAnswerFromId($id);
+        if($answer->getIsCorrect() == true and isset($_COOKIE['time'])){
+            $_SESSION['score']++;
+        }
+    }
+
+    public function endQuiz(){
+        $quizRepository = new QuizRepository();
+        session_start();
+        $str = $_POST['end'];
+        list($score,$quizId) = explode(" ",$str);
+        $quizRepository->insertScore($quizId,$_SESSION['user'],$score);
+
+        $this->mainPage();
+
+    }
 
 }

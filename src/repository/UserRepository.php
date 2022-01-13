@@ -31,11 +31,40 @@ class UserRepository extends Repository {
 
     }
 
+
+    public function getUserFromId(string $id){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT u.name, u.surname, u.email, u.account_id, u.email
+            FROM public.users u
+            WHERE  u.account_id = :id;'
+        );
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user == false){
+            return null;
+        }
+
+        $userToReturn = new User(
+            $user['email'],
+            "pass",
+            $id
+        );
+
+        $userToReturn->setName($user['name']);
+        $userToReturn->setSurname($user['surname']);
+
+        return $userToReturn;
+    }
+
+
     public function insertUser(string $email, string $password){
 
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO passwords (pass_hash)
-                   VALUES (?) RETURNING pass_id as id'
+                   VALUES (?) RETURNING pass_id as id;'
         );
 
         $stmt->execute([
@@ -55,6 +84,22 @@ class UserRepository extends Repository {
             $id['id']
         ]);
 
+    }
+
+    public function editUser(string $email, string $name, string $surname, string $id){
+
+        $stmt = $this->database->connect()->prepare(
+            'UPDATE users
+            SET (name,surname,email) = (?,?,?)
+            WHERE account_id = ?;'
+        );
+
+        $stmt->execute([
+            $name,
+            $surname,
+            $email,
+            $id
+        ]);
     }
 
 

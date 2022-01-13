@@ -18,4 +18,5 @@ class DefaultController extends AppController{
         $this->render('createQuiz');
 
     }
+
 }

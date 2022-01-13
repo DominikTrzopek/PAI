@@ -44,24 +44,24 @@ class User
     }
 
 
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
 
 
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    public function getSurname(): string
+    public function getSurname()
     {
         return $this->surname;
     }
 
 
-    public function setSurname(string $surname)
+    public function setSurname($surname)
     {
         $this->surname = $surname;
     }

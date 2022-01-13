@@ -144,10 +144,14 @@ button:hover{
     width: 5%;
 }
 
-nav > img{
+.logo{
     width: 80%;
-    margin: 2em auto;
+    margin: 2em 1.5em;
     filter: brightness(0.5) invert(0.9);
+}
+
+.logo:hover{
+    filter: brightness(0.5) invert(0.5);
 }
 
 a {
@@ -155,7 +159,6 @@ a {
     display: inline-block;
     line-height: 2em;
 }
-
 
 
 li i {
@@ -209,19 +212,110 @@ li{
     font-size: 2vmin;
 }
 
+.nav-mobile{
+    display: none;
+}
+
+li > a:hover{
+    border: 3px solid wheat;
+}
+
 @media only screen and (max-device-width:420px){
+
+    main{
+        width: 100vw;
+    }
 
     nav{ 
         display: none;
     }
+
     header{
-        width: 120%;
         color: wheat;
+        padding: 2.5em 1.5em;
+        opacity: 1;
     }
+
+    .headerButton{
+        height: 90%;
+        font-size: large;
+        width: 20%;
+    }
+
+
+    .search-bar{
+        width: 50%;
+    }
+
+    .search-bar > form > input{
+        font-size: 40px;
+        border: none;
+    }
+
+    .search-bar > form > i{
+        font-size: 40px;
+    }
+
     .space{
         display: none;
+
     }
     *{
         font-size: x-large;
     }
+
+    h2{
+        font-size: 60px;
+    }
+
+    .nav-mobile{
+        display: flex;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background: #2B2424 0% 0% no-repeat padding-box;
+        box-shadow: inset 0px 3px 6px #2D1B1B29;
+        color: white;
+        text-align: center;
+        padding-top: 2.5em;
+
+    }
+    .nav-mobile > a{
+        border: none;
+    }
+    .nav-mobile > a > i{
+        font-size: 50px;
+    }
+
+    .headerButton, .search-bar{
+        border: none;
+        background: none;
+    }
+
+    .add-quiz{
+        background: none;
+        border: none;
+        color: white;
+        font-size: 0;
+    }
+
+    .add-quiz > i{
+        font-size: 50px;
+        padding-top: 0.3em;
+    }
+
+    .logout > button{
+        background: none;
+        border: none;
+        color: white;
+        font-size: 0;
+        width: 20%;
+    }
+
+    .logout > button > i{
+        font-size: 50px;
+        padding-top: 0.3em;
+    }
+
 }

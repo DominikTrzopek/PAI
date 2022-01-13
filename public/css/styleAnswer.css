@@ -23,8 +23,6 @@ body{
     align-self: center;
     background: #2b242469 0% 0% no-repeat padding-box;
     box-shadow: inset 0px 3px 6px #2d1b1b49;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 
 }
 
@@ -107,7 +105,6 @@ button, p{
 
 .circle-right{
     position: absolute;
-    transform: translate(+50%,+50%);
     bottom: 0;
     right: 0;
     max-width: 70%;
@@ -141,10 +138,16 @@ button:hover{
 
     button,p{
         width: 75%;
+        font-size: 45px;
+        border: 10px solid #707070;
     }
 
     .h3-left, .h3-right{
-        font-size: large;
+        font-size: 50px;
+    }
+
+    button:hover{
+        border: 10px solid black;
     }
 
 }

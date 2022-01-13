@@ -15,4 +15,6 @@ Routing::post('createQuiz','QuizController');
 Routing::post('editQuiz','QuizController');
 Routing::get('startQuiz','QuizController');
 Routing::post('endQuiz','QuizController');
+Routing::get('viewProfile','ProfileController');
+Routing::post('editProfile','ProfileController');
 Routing::run($path);

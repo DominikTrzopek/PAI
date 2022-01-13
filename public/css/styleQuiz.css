@@ -79,13 +79,37 @@ p{
 
 }
 
+
 section > div{
     position: relative;
 }
-
 @media only screen and (max-device-width:420px){
     
     *{
-        font-size: small;
+        font-size: large;
+
+    }
+    section{
+        grid-template-columns: 1fr;
+        height: 100%;
+    }
+    h2{
+        font-size: 50px;
+    }
+    p{
+        font-size: 40px;
+    }
+    section > div > div > div >  i{
+        font-size: 40px;
+    }
+    .quizzes > div{
+        height: 60vh;
+    }
+    .quizButton{
+        font-size: 40px;
+    }
+
+    .fa-home{
+        color: wheat;
     }
 }

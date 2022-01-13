@@ -21,7 +21,7 @@
         </form>
     </div>
     <div class="circle">
-        <img src="public/img/circle.png" class="circle-right">
+        <img src="public/img/circle2.png" class="circle-right">
         <h3 class="h3-right" id="time"> <?php echo " "; ?></h3>
     </div>
 </div>

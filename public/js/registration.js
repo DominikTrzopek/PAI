@@ -1,4 +1,4 @@
-const form = document.querySelector("form");
+const form = document.querySelector('form[name="formJS"]');
 const emailInput = form.querySelector('input[name="email"]');
 const confirmPassword  = form.querySelector('input[name="passwordRepeat"]');
 
@@ -27,6 +27,7 @@ function validatePassword(){
         markValidation(confirmPassword, condition);
     },100);
 }
+
 
 confirmPassword.addEventListener('keyup', validatePassword);
 setInterval(validatePassword, 200);

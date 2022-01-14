@@ -2,6 +2,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="public/css/styleMainPage.css">
     <link rel="stylesheet" type="text/css" href="public/css/styleProfile.css">
+    <script type="text/javascript" src="./public/js/mark.js" defer></script>
+    <script type="text/javascript" src="./public/js/registration.js" defer></script>
     <script src="https://kit.fontawesome.com/a80193e2f6.js" crossorigin="anonymous"></script>
     <title>PROFILE</title>
 </head>
@@ -15,7 +17,7 @@ include("mainPageTemplatePart1.php");
 
             <div class="profileInfo">
                 <div class="content">
-                    <form class="edit" action="editProfile" method="POST">
+                    <form name="formJS" class="edit" action="editProfile" method="POST">
                         <h2>Email</h2>
                         <input name="email" type="text" placeholder=<?= $user->getEmail() ?>>
                         <h2>Name</h2>

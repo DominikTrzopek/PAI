@@ -13,21 +13,19 @@
             </li>
             <li>
                 <i class="fas fa-users"></i>
-                <a href="#" class="buttonMenu">join group</a>
+                <a href="/joinQuiz" class="buttonMenu">join group</a>
             </li>
             <li>
-                <i class="fas fa-bell"></i>
-                <a href="#" class="buttonMenu">notifications</a>
+                <i class="fas fa-graduation-cap"></i>
+                <a href="/scores" class="buttonMenu">grades</a>
             </li>
         </ul>
     </nav>
     <main>
         <header>
             <div class="search-bar">
-                <form>
                     <i class="fab fa-searchengin"></i>
-                    <input placeholder="search quizess">
-                </form>
+                    <input class="searchJS" placeholder="search quizzes">
             </div>
             <div class="space"></div>
             <div class="headerButton">

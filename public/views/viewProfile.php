@@ -19,6 +19,16 @@ include("mainPageTemplatePart1.php");
                     <h2>Email: <?= $user->getEmail() ?></h2>
                     <h2>Name: <?= $user->getName() ?></h2>
                     <h2>Surname: <?= $user->getSurname() ?></h2>
+
+                    <div class="messages">
+                        <?php
+                        if(isset($messages)){
+                            foreach($messages as $msg)
+                                echo $msg;
+                        }
+                        ?>
+                    </div>
+
                     <button class="editProfile" type="button" onclick="location.href='/editProfile';">Edit</button>
                 </div>
             </div>

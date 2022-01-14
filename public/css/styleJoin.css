@@ -1,0 +1,97 @@
+section{
+    padding: 2em;
+    overflow: hidden;
+    height: 70%;
+    width: 40%;
+}
+
+section > div{
+    border: 1px solid gray;
+    border-radius: 2em 2em;
+    background: #FFFBE9E6 0% 0% no-repeat padding-box;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.fa-users{
+    color: wheat;
+}
+
+button:hover{
+    border: 3px solid black;
+}
+
+.join{
+    width: 110%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.join > input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 1em 0.5em 0.5em;
+    margin: 2em;
+    width: 50%;
+}
+
+p{
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+    font-size: x-large;
+}
+
+.joinQuizButton{
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+
+    width: 50%;
+    color: black;
+    line-height: 3em;
+    margin: 1em;
+
+    position: absolute;
+    bottom: 10%;
+}
+
+
+@media only screen and (max-device-width:420px) {
+    section{
+        width: 80%;
+        padding: 15% 10%;
+    }
+
+    .joinQuiz{
+        height: 80%;
+    }
+
+    .joinQuizButton{
+        font-size: 45px;
+        border-radius: 70px;
+    }
+
+    p{
+      font-size: 50px;
+    }
+
+    .join > input{
+        font-size: 40px;
+    }
+}

@@ -4,6 +4,7 @@ require_once 'Repository.php';
 require_once __DIR__.'/../models/Quiz.php';
 require_once __DIR__.'/../models/Question.php';
 require_once __DIR__.'/../models/Answer.php';
+require_once __DIR__.'/../models/Score.php';
 
 class QuizRepository extends Repository {
 
@@ -69,6 +70,61 @@ class QuizRepository extends Repository {
             $quiz['creator_id']
         );
     }
+
+
+    public function getQuizFromName(string $name){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * FROM quizzes WHERE name = :name'
+        );
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $quiz = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($quiz == false){
+            return null;
+        }
+
+        $quizData = new Quiz(
+            $quiz['name'],
+            $quiz['description'],
+            $quiz['topic'],
+            $quiz['image'],
+            $quiz['time_restriction'],
+            $quiz['quiz_id'],
+            $quiz['creator_id']
+        );
+
+        return [$quizData,$quiz['pass_id_fk']];
+    }
+
+    public function getAllQuizzesFromName(string $searchString, string $userId){
+        $searchString = '%'.strtolower($searchString).'%';
+
+        $stmt = $this->database->connect()->prepare(
+            'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE ((q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)) AND LOWER(q.name) LIKE :search'
+        );
+        $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+    public function getQuizPassword($id){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * FROM passwords WHERE pass_id = :pass_id'
+        );
+        $stmt->bindParam(':pass_id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        $pass = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $pass['pass_hash'];
+
+    }
+
 
     public function getQuizzes(string $userId): array{
         $result = [];
@@ -213,8 +269,42 @@ class QuizRepository extends Repository {
         ]);
     }
 
+    public function joinQuiz(string $userId, string $quizId){
+        $stmt = $this->database->connect()->prepare(
+            'INSERT INTO quiz_rel (quiz_id_fk, user_id_fk)
+                   VALUES (?,?)'
+        );
+        $stmt->execute([
+            $quizId,
+            $userId
+        ]);
 
+    }
 
+    public function getScores(string $userId){
+        $stmt = $this->database->connect()->prepare(
+            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, (Select count(q2.name) FROM questions qu, quizzes q2
+            WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max FROM scores s, quizzes q
+            WHERE s.user_id_fk = :id AND s.quiz_id_fk = q.quiz_id'
+        );
+
+        $stmt->bindParam(':id', $userId, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+        foreach ($scores as $score){
+            $result[] = new Score(
+                $score['score'],
+                $score['date'],
+                $score['name'],
+                $score['max']
+            );
+        }
+
+        return $result;
+
+    }
 
 
 }

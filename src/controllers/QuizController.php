@@ -35,11 +35,14 @@ class QuizController extends AppController
 
             $password_hashed = password_hash($_POST['password'],PASSWORD_DEFAULT,['cost'=>12]);
             $quiz = new Quiz($_POST['name'],$_POST['description'],$_POST['topic'],$_FILES['file']['name'], $_POST['time'], $_SESSION['quizId'],$_SESSION['user'],$password_hashed);
+            if($quizRepository->getQuizFromName($_POST['name'])){
+                $this->messages[] = "Quiz with this name already exists";
+                return $this->render('createQuiz', ['messages' => $this->messages]);
+            }
             $quizRepository->insertQuiz($quiz);
 
             return $this->render("addQuestion", ['messages' => $this->messages,'quiz' => $quiz->getId()]);
         }
-        $this->messages[] = ' Upload correct file!';
 
         $this->render('createQuiz', ['messages' => $this->messages]);
 
@@ -155,6 +158,46 @@ class QuizController extends AppController
 
         $this->mainPage();
 
+    }
+
+
+    public function joinQuiz(){
+        if(isset($_POST['joinButton'])){
+            session_start();
+            $quizRepository = new QuizRepository();
+            $quizName = $_POST['name'];
+            $password = $_POST['password'];
+            $quiz = $quizRepository->getQuizFromName($quizName);
+            if($quiz == null){
+                return $this->render('joinQuiz', ['messages' => ["Quiz not found!"]]);
+            }
+            if(!password_verify($password,$quizRepository->getQuizPassword($quiz[1]) )){
+                return $this->render('joinQuiz', ['messages'=> ["Incorrect password"]]);
+            }
+            $quizRepository->joinQuiz($_SESSION['user'],$quiz[0]->getId());
+            return $this->render('joinQuiz',['messages'=> ["Successfully joined quiz!"]]);
+
+        }
+        else{
+            $this->render('joinQuiz');
+        }
+    }
+
+    public function search(){
+        $quizRepository = new QuizRepository();
+        session_start();
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+
+            echo json_encode($quizRepository->getAllQuizzesFromName($decoded['search'],$_SESSION['user']));
+
+        }
     }
 
 }

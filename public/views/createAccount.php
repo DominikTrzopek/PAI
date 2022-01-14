@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <div class="login-container">           
-            <form action="createAccount" method="POST">
+            <form name="formJS" action="createAccount" method="POST">
                 <p>Welcome to Edival! Let's get started.</p>
                 <img src="public/img/logo.svg" id="logo2">
                 <div class="messages">

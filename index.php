@@ -17,4 +17,8 @@ Routing::get('startQuiz','QuizController');
 Routing::post('endQuiz','QuizController');
 Routing::get('viewProfile','ProfileController');
 Routing::post('editProfile','ProfileController');
+Routing::post('joinQuiz','QuizController');
+Routing::post('search','QuizController');
+Routing::get('scores','GradesController');
+
 Routing::run($path);

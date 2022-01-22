@@ -1,9 +1,9 @@
 section{
-    display: grid;
-    grid-template-columns: repeat(1,1fr);
-    grid-gap: 8%;
+    display: flex;
+    flex-direction: column;
     padding: 2em;
-    overflow: auto;
+    margin-bottom: 5em;
+    overflow-y: scroll;
     height: 70%;
 }
 
@@ -16,6 +16,8 @@ section{
 
     display: flex;
     justify-content: flex-start;
+    margin-bottom: 3em;
+    min-width: 0;
 }
 
 .textContainer{
@@ -44,5 +46,8 @@ p{
 @media only screen and (max-device-width:420px){
     p{
         font-size: 40px;
+    }
+    .scoreContainer{
+        height: 250px;
     }
 }

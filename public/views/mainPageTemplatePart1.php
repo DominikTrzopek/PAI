@@ -9,7 +9,7 @@
             </li>
             <li>
                 <i class="fa fa-gears"></i>
-                <a href="#" class="buttonMenu">manage quizzes</a>
+                <a href="/manageQuizzes" class="buttonMenu">manage quizzes</a>
             </li>
             <li>
                 <i class="fas fa-users"></i>

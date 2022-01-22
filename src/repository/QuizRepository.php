@@ -126,12 +126,27 @@ class QuizRepository extends Repository {
     }
 
 
-    public function getQuizzes(string $userId): array{
+    public function getQuizzes(string $userId, string $query): array{
         $result = [];
-        $stmt = $this->database->connect()->prepare(
-            'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+
+        if($query == "joined") {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)'
+            );
+        }
+        else if($query == "own") {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE (q.creator_id = :id)'
+            );
+        }
+        else{
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
                     WHERE (q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)'
-        );
+            );
+        }
 
         $stmt->bindParam(':id', $userId, PDO::PARAM_STR);
 
@@ -153,6 +168,14 @@ class QuizRepository extends Repository {
         return $result;
     }
 
+    public function deleteQuiz(string $id){
+        $stmt = $this->database->connect()->prepare(
+            'DELETE FROM quizzes WHERE quiz_id = :id'
+        );
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+    }
 
 
     public function getQuestions(string $quizId): array{
@@ -240,6 +263,14 @@ class QuizRepository extends Repository {
 
     }
 
+    public function deleteQuestion(int $id){
+        $stmt = $this->database->connect()->prepare(
+            'DELETE FROM questions WHERE  question_id = :id'
+        );
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
    public function insertAnswer(string $str, int $id, string $flag){
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO answers (question_od_fk, text, is_correct)
@@ -281,6 +312,15 @@ class QuizRepository extends Repository {
 
     }
 
+    public function quitQuiz(string $userId, string $quizId){
+        $stmt = $this->database->connect()->prepare(
+            'DELETE FROM quiz_rel q WHERE (q.quiz_id_fk = :quizId AND q.user_id_fk = :userId)'
+        );
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':quizId', $quizId, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
     public function getScores(string $userId){
         $stmt = $this->database->connect()->prepare(
             'SELECT s.score_id, s.score as score, s.date as date, q.name as name, (Select count(q2.name) FROM questions qu, quizzes q2
@@ -303,6 +343,26 @@ class QuizRepository extends Repository {
         }
 
         return $result;
+
+    }
+
+    public function getAllScoresFromNameOrDate(string $searchString, string $userId){
+
+        $searchString = '%'.strtolower($searchString).'%';
+        $stmt = $this->database->connect()->prepare(
+            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, (Select count(q2.name) FROM questions qu, quizzes q2
+            WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max FROM scores s, quizzes q
+            WHERE s.user_id_fk = :id AND s.quiz_id_fk = q.quiz_id AND (LOWER(q.name) LIKE :search OR to_char(date,:format) LIKE :search)'
+        );
+
+        $format = "YYYY-MM-DD";
+
+        $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->bindParam(':format', $format, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 

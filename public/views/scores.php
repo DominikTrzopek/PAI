@@ -3,7 +3,8 @@
     <link rel="stylesheet" type="text/css" href="public/css/styleMainPage.css">
     <link rel="stylesheet" type="text/css" href="public/css/styleScore.css">
     <script src="https://kit.fontawesome.com/a80193e2f6.js" crossorigin="anonymous"></script>
-    <title>PROFILE</title>
+    <script type="text/javascript" src="./public/js/searchScores.js" defer></script>
+    <title>GRADES</title>
 </head>
 
 

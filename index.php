@@ -18,7 +18,10 @@ Routing::post('endQuiz','QuizController');
 Routing::get('viewProfile','ProfileController');
 Routing::post('editProfile','ProfileController');
 Routing::post('joinQuiz','QuizController');
-Routing::post('search','QuizController');
+Routing::post('searchQuiz','QuizController');
 Routing::get('scores','GradesController');
-
+Routing::post('searchScores','GradesController');
+Routing::get('manageQuizzes','QuizEditionController');
+Routing::post('changeQuiz','QuizEditionController');
+Routing::post('deleteQuestion','QuizEditionController');
 Routing::run($path);

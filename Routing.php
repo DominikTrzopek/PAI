@@ -5,6 +5,7 @@ require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/ProfileController.php';
 require_once 'src/controllers/QuizController.php';
 require_once 'src/controllers/GradesController.php';
+require_once 'src/controllers/QuizEditionController.php';
 
 class Routing{
     public static $routes;

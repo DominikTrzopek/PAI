@@ -1,0 +1,98 @@
+section{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 70%;
+}
+
+
+.parentContainer{
+    background: #FFFBE9f6 0% 0% no-repeat padding-box;
+    border: 3px solid gray;
+    border-radius: 2em 2em;
+    line-height: 2em;
+    height: 100px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0 0 3em;
+    padding: 0;
+}
+
+.quizForm{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.textContainer{
+    margin-left: 5%;
+    padding-right: 5%;
+    border-right: 1px solid gray;
+    width: 20%;
+
+}
+
+button:hover{
+    border: 3px solid black;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+
+.manageButton{
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 1.5em;
+    opacity: 1;
+
+    min-width: 7em;
+    color: black;
+    margin: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    min-height: 60%;
+}
+
+
+
+.fa-gears{
+    color: wheat;
+}
+
+p{
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+    font-size: large;
+}
+
+@media only screen and (max-device-width:420px){
+    p{
+        font-size: 40px;
+    }
+
+    .manageButton{
+        min-width: 4em;
+        min-height: unset;
+        height: 50%;
+    }
+
+    .buttons{
+        padding-right: 1em;
+    }
+
+    .parentContainer{
+        height: 250px;
+    }
+
+
+
+}

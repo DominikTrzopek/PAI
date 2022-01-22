@@ -7,7 +7,7 @@ search.addEventListener("keyup", function (event){
 
 
         const data = {search: this.value};
-        fetch("/search",{
+        fetch("/searchQuiz",{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

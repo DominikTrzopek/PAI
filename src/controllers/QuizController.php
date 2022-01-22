@@ -59,7 +59,6 @@ class QuizController extends AppController
         }
         if(isset($_POST['add'])) {
             $quizId = $_POST['add'];
-            //$question = new Question($quizId, $_POST['content']);
             $questionId = $quizRepository->insertQuestion($quizId, $_POST['content']);
             $quizRepository->insertAnswer($_POST['correct'],$questionId,1);
             $quizRepository->insertAnswer($_POST['incorrect1'],$questionId,'false');
@@ -68,14 +67,6 @@ class QuizController extends AppController
 
             $this->render('addQuestion', ['messages' => $this->messages,'quiz' => $quizId]);
         }
-        if(isset($_POST['previous'])) {
-            //TODO fix this
-            $quizId = $_POST['previous'];
-            $question = $quizRepository->getQuestions($quizId);
-            $this->render('showQuestion',  ['messages' => $this->messages,'question' => $question]);
-        }
-
-
 
     }
 
@@ -98,7 +89,7 @@ class QuizController extends AppController
     public function mainPage(){
         session_start();
         $quizRepository = new QuizRepository();
-        $quizzes = $quizRepository->getQuizzes($_SESSION['user']);
+        $quizzes = $quizRepository->getQuizzes($_SESSION['user'],"all");
         $this->render('mainPage',['quizzes' => $quizzes]);
     }
 
@@ -183,7 +174,7 @@ class QuizController extends AppController
         }
     }
 
-    public function search(){
+    public function searchQuiz(){
         $quizRepository = new QuizRepository();
         session_start();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';

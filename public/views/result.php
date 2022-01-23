@@ -8,7 +8,7 @@
     <div class="qa-container">
         <form action="endQuiz" method="POST">
             <p>Your final score: <?= $score."/".$all ?> </p>
-            <button name="end" value="<?= $score." ".$quizId ?>">Save & end Quiz</button>
+            <button name="end" value="<?= $score." ".$quizId." ".$all ?>">Save & end Quiz</button>
         </form>
     </div>
 </div>

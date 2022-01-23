@@ -10,6 +10,7 @@ class QuizEditionController extends AppController
     public function manageQuizzes(){
 
         session_start();
+        unset($_SESSION['quiz']);
         $quizRepository = new QuizRepository();
         $myQuizzes = $quizRepository->getQuizzes($_SESSION['user'], "own");
         $joinedQuizzes = $quizRepository->getQuizzes($_SESSION['user'], "joined");
@@ -26,6 +27,8 @@ class QuizEditionController extends AppController
         }
         else if(isset($_POST['deleteQuestion'])){
             $id = $_POST['deleteQuestion'];
+            session_start();
+            $_SESSION['quiz'] = $id;
             $questions = $quizRepository->getQuestions($id);
             return $this->render("showQuestions", ['questions' => $questions, 'quizId' => $id]);
         }
@@ -55,6 +58,42 @@ class QuizEditionController extends AppController
         return $this->render("showQuestions", ['questions' => $questions, 'quizId' => $quizId]);
 
 
+    }
+
+    public function searchQuestions(){
+        $this->search("questions");
+    }
+
+    public function searchManageOwner(){
+        $this->search("owner");
+    }
+
+    public function searchManageMember(){
+        $this->search("member");
+    }
+
+    function search(string $cond){
+        $quizRepository = new QuizRepository();
+        session_start();
+        $id = $_SESSION['quiz'];
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+            if($cond == "questions") {
+                echo json_encode($quizRepository->getQuestionsFromName($decoded['search'], $_SESSION['quiz']));
+            }
+            else if($cond == "owner") {
+                echo json_encode($quizRepository->getAllQuizzesFromName($decoded['search'],$_SESSION['user'], "owner"));
+            }
+            else if($cond == "member") {
+                echo json_encode($quizRepository->getAllQuizzesFromName($decoded['search'],$_SESSION['user'], "member"));
+            }
+        }
     }
 
 }

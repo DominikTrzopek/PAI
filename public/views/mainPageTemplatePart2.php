@@ -20,7 +20,8 @@
         <div>
             <h2>title</h2>
             <div class="social">
-                <i class="fas fa-users">Id</i>
+                <i id="numberOfQuestions" class="fas fa-comment-alt"></i>
+                <i id="time" class="fas fa-clock"></i>
             </div>
             <p>description</p>
         </div>
@@ -43,6 +44,53 @@
         <div class="textContainerLast">
             <p id="quiz">Quiz: <br> </p>
         </div>
+    </div>
+
+</template>
+
+<template id = "questionTemplate">
+
+    <div class="parentContainer">
+        <div class="textContainer">
+            <p>Question</p>
+        </div>
+        <form class="quizForm" action="deleteQuestion" method="POST">
+            <div class="buttons">
+                <button class="manageButton" name="delete" type="submit" value="">Delete</button>
+            </div>
+        </form>
+    </div>
+
+</template>
+
+<template id ="quizOwner">
+
+    <div class="parentContainer">
+        <div class="textContainer">
+            <p>Quiz (owner)</p>
+        </div>
+        <form class="quizForm" action="changeQuiz" method="POST">
+            <div class="buttons">
+                <button id="addQuestion" class="manageButton" name="addQuestion" type="submit" value="">Add Question</button>
+                <button id="deleteQuestion" class="manageButton" name="deleteQuestion" type="submit" value="">Delete question</button>
+                <button id="deleteQuiz" class="manageButton" name="deleteQuiz" type="submit" value="">Delete quiz</button>
+            </div>
+        </form>
+    </div>
+
+</template>
+
+<template id ="quizMember">
+
+    <div class="parentContainer">
+        <div class="textContainer">
+            <p>Quiz (member)</p>
+        </div>
+        <form class="quizForm" action="changeQuiz" method="POST">
+            <div class="buttons">
+                <button class="manageButton" name="quit" type="submit" value="">Quit quiz</button>
+            </div>
+        </form>
     </div>
 
 </template>

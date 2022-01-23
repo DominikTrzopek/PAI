@@ -44,8 +44,11 @@ function createQuiz(quiz){
     const description = clone.querySelector("p");
     description.innerHTML = quiz.description;
 
-    const social = clone.querySelector("i");
-    social.innerHTML = quiz.quiz_id;
+    const numberOfQuestions = clone.querySelector("#numberOfQuestions");
+    numberOfQuestions.innerHTML = quiz.max;
+
+    const time = clone.querySelector("#time");
+    time.innerHTML = quiz.time_restriction;
 
     const button = clone.querySelector("button");
     button.value = quiz.quiz_id;

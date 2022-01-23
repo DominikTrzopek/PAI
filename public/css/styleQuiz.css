@@ -59,8 +59,11 @@ p{
     font-size: x-large;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    padding: 0.5em 1em;
+    justify-content: space-around;
+}
+
+.social > i{
+    padding-right: 2em;
 }
 
 .quizButton{

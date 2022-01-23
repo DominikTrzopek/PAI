@@ -24,4 +24,7 @@ Routing::post('searchScores','GradesController');
 Routing::get('manageQuizzes','QuizEditionController');
 Routing::post('changeQuiz','QuizEditionController');
 Routing::post('deleteQuestion','QuizEditionController');
+Routing::post('searchQuestions','QuizEditionController');
+Routing::post('searchManageOwner','QuizEditionController');
+Routing::post('searchManageMember','QuizEditionController');
 Routing::run($path);

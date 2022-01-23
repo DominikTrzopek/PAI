@@ -98,13 +98,28 @@ class QuizRepository extends Repository {
         return [$quizData,$quiz['pass_id_fk']];
     }
 
-    public function getAllQuizzesFromName(string $searchString, string $userId){
+    public function getAllQuizzesFromName(string $searchString, string $userId, string $query){
         $searchString = '%'.strtolower($searchString).'%';
 
-        $stmt = $this->database->connect()->prepare(
-            'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
-                    WHERE ((q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)) AND LOWER(q.name) LIKE :search'
-        );
+        if($query == "owner") {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE (q.creator_id = :id) AND LOWER(q.name) LIKE :search'
+            );
+        }
+        else if($query == "member") {
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
+                    WHERE (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id) AND LOWER(q.name) LIKE :search'
+            );
+        }
+        else{
+            $stmt = $this->database->connect()->prepare(
+                'SELECT DISTINCT (Select count(q2.name) FROM questions qu, quizzes q2
+                WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max, q.* FROM quizzes q, quiz_rel r
+                WHERE ((q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)) AND LOWER(q.name) LIKE :search'
+            );
+        }
         $stmt->bindParam(':id',$userId, PDO::PARAM_STR);
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
@@ -143,8 +158,9 @@ class QuizRepository extends Repository {
         }
         else{
             $stmt = $this->database->connect()->prepare(
-                'SELECT DISTINCT q.* FROM quizzes q, quiz_rel r
-                    WHERE (q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)'
+                'SELECT DISTINCT (Select count(q2.name) FROM questions qu, quizzes q2
+                WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max, q.* FROM quizzes q, quiz_rel r
+                WHERE (q.creator_id = :id) OR (r.user_id_fk = :id AND r.quiz_id_fk = q.quiz_id)'
             );
         }
 
@@ -155,15 +171,22 @@ class QuizRepository extends Repository {
         $quizzes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($quizzes as $quiz){
-            $result [] = new Quiz(
+            $newQuiz = new Quiz(
                 $quiz['name'],
                 $quiz['description'],
                 $quiz['topic'],
                 $quiz['image'],
-                $quiz['time'],
+                $quiz['time_restriction'],
                 $quiz['quiz_id'],
                 $quiz['creator_id']
             );
+            if($quiz['max'] != null) {
+                $newQuiz->setNumberOfQuestions($quiz['max']);
+            }
+            else{
+                $newQuiz->setNumberOfQuestions(0);
+            }
+            $result[] = $newQuiz;
         }
         return $result;
     }
@@ -245,7 +268,7 @@ class QuizRepository extends Repository {
     }
 
 
-    public function insertQuestion(string $quizId, $content ){
+    public function insertQuestion(string $quizId, string $content ){
 
         $stmt = $this->database->connect()->prepare(
             'INSERT INTO questions (quiz_id_fk, content)
@@ -263,6 +286,7 @@ class QuizRepository extends Repository {
 
     }
 
+
     public function deleteQuestion(int $id){
         $stmt = $this->database->connect()->prepare(
             'DELETE FROM questions WHERE  question_id = :id'
@@ -270,6 +294,22 @@ class QuizRepository extends Repository {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public function getQuestionsFromName(string $searchString, string $id){
+        $searchString = '%'.strtolower($searchString).'%';
+
+        $stmt = $this->database->connect()->prepare(
+            'SELECT * from questions q
+            where q.quiz_id_fk = :quizId AND LOWER(q.content) LIKE :search'
+        );
+        $stmt->bindParam(':quizId',$id, PDO::PARAM_STR);
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
 
    public function insertAnswer(string $str, int $id, string $flag){
         $stmt = $this->database->connect()->prepare(
@@ -284,10 +324,10 @@ class QuizRepository extends Repository {
         ]);
     }
 
-    public function insertScore(string $quizId, string $userId, string $score){
+    public function insertScore(string $quizId, string $userId, string $score, string $maxScore){
         $stmt = $this->database->connect()->prepare(
-            'INSERT INTO scores (quiz_id_fk, user_id_fk, score, date)
-                   VALUES (?,?,?,?)'
+            'INSERT INTO scores (quiz_id_fk, user_id_fk, score, date, score_max)
+                   VALUES (?,?,?,?,?)'
         );
 
         $date = new DateTime();
@@ -296,7 +336,8 @@ class QuizRepository extends Repository {
             $quizId,
             $userId,
             $score,
-            $date->format('Y-m-d')
+            $date->format('Y-m-d'),
+            $maxScore,
         ]);
     }
 
@@ -323,8 +364,7 @@ class QuizRepository extends Repository {
 
     public function getScores(string $userId){
         $stmt = $this->database->connect()->prepare(
-            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, (Select count(q2.name) FROM questions qu, quizzes q2
-            WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max FROM scores s, quizzes q
+            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, s.score_max AS max FROM scores s, quizzes q
             WHERE s.user_id_fk = :id AND s.quiz_id_fk = q.quiz_id'
         );
 
@@ -350,8 +390,7 @@ class QuizRepository extends Repository {
 
         $searchString = '%'.strtolower($searchString).'%';
         $stmt = $this->database->connect()->prepare(
-            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, (Select count(q2.name) FROM questions qu, quizzes q2
-            WHERE qu.quiz_id_fk = q2.quiz_id AND q2.name = q.name) AS max FROM scores s, quizzes q
+            'SELECT s.score_id, s.score as score, s.date as date, q.name as name, s.score_max AS max FROM scores s, quizzes q
             WHERE s.user_id_fk = :id AND s.quiz_id_fk = q.quiz_id AND (LOWER(q.name) LIKE :search OR to_char(date,:format) LIKE :search)'
         );
 

@@ -18,7 +18,8 @@ include("mainPageTemplatePart1.php");
                      <div>
                         <h2><?= $quiz->getName() ?></h2>
                         <div class="social">
-                            <i class="fas fa-users">Id:<?= $quiz->getId() ?></i>
+                            <i id="numberOfQuestions" class="fas fa-comment-alt"><?=$quiz->getNumberOfQuestions() ?></i>
+                            <i id="time" class="fas fa-clock"><?=$quiz->getTime() ?></i>
                         </div>
                         <p><?= $quiz->getDescription() ?></p>
                     </div>

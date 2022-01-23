@@ -9,7 +9,7 @@ class Quiz{
     private $creator;
     private $password;
     private $time;
-
+    private $numberOfQuestions;
 
     public function __construct($name, $description, $topic, $image, $time, $id,$creator,$password=null)
     {
@@ -21,6 +21,17 @@ class Quiz{
         $this->id = $id;
         $this->creator = $creator;
         $this->time = $time;
+    }
+
+    public function getNumberOfQuestions():int
+    {
+        return $this->numberOfQuestions;
+    }
+
+
+    public function setNumberOfQuestions(int $numberOfQuestions)
+    {
+        $this->numberOfQuestions = $numberOfQuestions;
     }
 
     public function getTime():int

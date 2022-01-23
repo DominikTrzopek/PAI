@@ -3,7 +3,8 @@
     <link rel="stylesheet" type="text/css" href="public/css/styleMainPage.css">
     <link rel="stylesheet" type="text/css" href="public/css/styleManageQuizzes.css">
     <script src="https://kit.fontawesome.com/a80193e2f6.js" crossorigin="anonymous"></script>
-
+    <script type="text/javascript" src="./public/js/searchManageOwner.js" defer></script>
+    <script type="text/javascript" src="./public/js/searchManageMember.js" defer></script>
     <title>MANAGE</title>
 </head>
 
@@ -12,11 +13,11 @@
 include("mainPageTemplatePart1.php");
 ?>
 
-<section class = grades>
+<section class = "manageQuizzes">
     <?php foreach ($myQuizzes as $quiz):?>
         <div class="parentContainer">
             <div class="textContainer">
-                <p>Quiz: <br> <?= $quiz->getName(); ?></p>
+                <p>Quiz (owner): <br> <?= $quiz->getName(); ?></p>
             </div>
             <form class="quizForm" action="changeQuiz" method="POST">
                 <div class="buttons">
@@ -30,7 +31,7 @@ include("mainPageTemplatePart1.php");
     <?php foreach ($joinedQuizzes as $quiz):?>
         <div class="parentContainer">
             <div class="textContainer">
-                <p>Quiz: <br> <?= $quiz->getName(); ?></p>
+                <p>Quiz (member): <br> <?= $quiz->getName(); ?></p>
             </div>
             <form class="quizForm" action="changeQuiz" method="POST">
                 <div class="buttons">

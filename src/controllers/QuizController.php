@@ -144,8 +144,11 @@ class QuizController extends AppController
         $quizRepository = new QuizRepository();
         session_start();
         $str = $_POST['end'];
-        list($score,$quizId) = explode(" ",$str);
-        $quizRepository->insertScore($quizId,$_SESSION['user'],$score);
+        list($score,$quizId,$maxScore) = explode(" ",$str);
+        $quizRepository->insertScore($quizId,$_SESSION['user'],$score,$maxScore);
+        unset($_SESSION['questionNumber']);
+        unset($_SESSION['score']);
+        unset($_SESSION['lastAnswer']);
 
         $this->mainPage();
 
@@ -186,7 +189,7 @@ class QuizController extends AppController
             header('Content-Type: application/json');
             http_response_code(200);
 
-            echo json_encode($quizRepository->getAllQuizzesFromName($decoded['search'],$_SESSION['user']));
+            echo json_encode($quizRepository->getAllQuizzesFromName($decoded['search'],$_SESSION['user'], "all"));
 
         }
     }

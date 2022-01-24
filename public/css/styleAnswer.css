@@ -26,7 +26,7 @@ body{
 
 }
 
-form{
+.answers{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,12 +34,19 @@ form{
 }
 
 p{
-    font-size: 30px;
     text-align: center;
     padding: 1em;
     margin: 0;
 
 }
+
+.end{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
 
 button, p{
     background: wheat 0% 0% no-repeat padding-box;
@@ -129,6 +136,14 @@ button:hover{
     font-size: large;
 }
 
+.correct{
+    border: 5px solid green;
+}
+
+.inCorrect{
+    border: 5px solid red;
+}
+
 
 
 @media only screen and (max-device-width:480px){
@@ -148,6 +163,14 @@ button:hover{
 
     button:hover{
         border: 10px solid black;
+    }
+
+    .correct{
+        border: 20px solid green !important;
+    }
+
+    .inCorrect{
+        border: 20px solid red !important;
     }
 
 }

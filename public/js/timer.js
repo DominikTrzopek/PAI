@@ -1,5 +1,9 @@
+var timer;
+
 function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
+    display = document.querySelector('#time');
+    timer = duration;
+    var minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
@@ -12,16 +16,34 @@ function startTimer(duration, display) {
             timer = 0;
             display.classList.add('time');
         }
+        else {
+            display.classList.remove('time');
+        }
+        setCookie("remainingTime",timer,100);
+        console.log(getCookieValue("remainingTime"));
     }, 1000);
 }
+
+
 
 const getCookieValue = (name) => (
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
 )
 
+function setCookie(name,value,seconds) {
+    var expires = "";
+    if (seconds) {
+        var date = new Date();
+        date.setTime(date.getTime() + (seconds*60));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+
 window.onload = function () {
-    var dur = getCookieValue("time");
-        display = document.querySelector('#time');
-    startTimer(dur, display);
+    var value = getCookieValue("remainingTime");
+    startTimer(value);
+
 };
 

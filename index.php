@@ -27,4 +27,6 @@ Routing::post('deleteQuestion','QuizEditionController');
 Routing::post('searchQuestions','QuizEditionController');
 Routing::post('searchManageOwner','QuizEditionController');
 Routing::post('searchManageMember','QuizEditionController');
+Routing::post('nextQuestion','QuizController');
+Routing::post('nextAnswers','QuizController');
 Routing::run($path);

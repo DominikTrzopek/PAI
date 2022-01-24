@@ -88,6 +88,10 @@ class QuizController extends AppController
 
     public function mainPage(){
         session_start();
+        unset($_SESSION['questionNumber']);
+        unset($_SESSION['score']);
+        unset($_SESSION['quiz']);
+        setcookie("remainingTime", "", time()-3600);
         $quizRepository = new QuizRepository();
         $quizzes = $quizRepository->getQuizzes($_SESSION['user'],"all");
         $this->render('mainPage',['quizzes' => $quizzes]);
@@ -99,45 +103,46 @@ class QuizController extends AppController
         list($quizId,$answerId) = explode(" ",$str);
 
         if(!isset($_SESSION['questionNumber'])){
+
             $_SESSION['questionNumber'] = 0;
             $_SESSION['score'] = 0;
-        }
-        else if(isset($_GET['next']) and $answerId != $_SESSION['lastAnswer']) {
-            $_SESSION['questionNumber']++;
-        }
-
-        if($answerId != null and $answerId != $_SESSION['lastAnswer']) {
-            $this->checkAnswer($answerId);
+            $_SESSION['quiz'] = $quizId;
         }
 
         $quizRepository = new QuizRepository();
         $quiz = $quizRepository->getQuizFromId($quizId);
         $time = $quiz->getTime();
+        $_SESSION['time'] = $time;
         setcookie("time", $time, time() + ($time + 1), "/");
+
+        if(!isset($_COOKIE['remainingTime'])){
+            setcookie("remainingTime", $time, time() + (60), "/");
+        }
+
+
         $questions = $quizRepository->getQuestions($quizId);
         $allQuestions = count($questions);
-        if($_SESSION['questionNumber'] >= count($questions)){
-            unset($_SESSION['questionNumber']);
-            $score = $_SESSION['score'];
-            unset($_SESSION['score']);
-            $this->render('result',['score' => $score, 'all'=>$allQuestions, 'quizId' => $quizId]);
-            return;
-        }
-        $question = $questions[$_SESSION['questionNumber']];
+
+        setcookie("numberOfQuestion", $_SESSION['questionNumber'], time() + (60), "/");
+        setcookie("maxQuestion", $allQuestions, time() + (60), "/");
+
+        $question = $questions[ $_SESSION['questionNumber']];
         $answers = $quizRepository->getAnswers($question->getQuestionId());
         shuffle($answers);
         $this->render('doQuiz', ['question' => $question, 'answers' => $answers, 'quizId' => $quizId, 'all' => $allQuestions, ]);
 
     }
 
-    function checkAnswer(int $id){
+    function checkAnswer(int $id):bool{
         session_start();
-        $_SESSION['lastAnswer'] = $id;
+        //$_SESSION['lastAnswer'] = $id;
         $quizRepository = new QuizRepository();
         $answer = $quizRepository->getAnswerFromId($id);
         if($answer->getIsCorrect() == true and isset($_COOKIE['time'])){
             $_SESSION['score']++;
+            return true;
         }
+        return false;
     }
 
     public function endQuiz(){
@@ -152,6 +157,94 @@ class QuizController extends AppController
 
         $this->mainPage();
 
+    }
+
+    public function nextQuestion(){
+
+        session_start();
+
+        $quizRepository = new QuizRepository();
+        $questions = $quizRepository->getQuestions($_SESSION['quiz']);
+        $allQuestions = count($questions);
+
+        setcookie("numberOfQuestion", $_SESSION['questionNumber'] + 1, time() + (60), "/");
+        setcookie("maxQuestion",$allQuestions, time() + (60), "/");
+        setcookie("time", $_SESSION['time'], time() + ($_SESSION['time'] + 1), "/");
+
+
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+
+            $content = trim(file_get_contents("php://input"));
+            $answerId = json_decode($content, true);
+            $isCorrect = $this->checkAnswer($answerId);
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+
+            if ($_SESSION['questionNumber'] + 1 >= count($questions)) {
+
+                $score = $_SESSION['score'];
+
+                $array = array(
+                    "score" => $score,
+                    "maxQuestion" => $allQuestions,
+                    "quizId" => $_SESSION['quiz'],
+                    "isCorrect" => $isCorrect,
+                );
+                echo json_encode($array);
+
+
+            }
+            else {
+
+                $_SESSION['questionNumber']++;
+
+                $question = $questions[$_SESSION['questionNumber']];
+
+                $array = array(
+                    "question" => $question->getContent(),
+                    "numberOfQuestion" => $_SESSION['questionNumber'],
+                    "maxQuestion" => $allQuestions,
+                    "questionId" => $question->getQuestionId(),
+                    "isCorrect" => $isCorrect,
+                );
+                echo json_encode($array);
+
+            }
+        }
+    }
+
+    public function nextAnswers(){
+        $quizRepository = new QuizRepository();
+        session_start();
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            $answers = $quizRepository->getAnswers($decoded);
+            shuffle($answers);
+
+            $array = array(
+                "textA" => $answers[0]->getText(),
+                "textB" => $answers[1]->getText(),
+                "textC" => $answers[2]->getText(),
+                "textD" => $answers[3]->getText(),
+                "valueA" => $answers[0]->getAnswerId(),
+                "valueB" => $answers[1]->getAnswerId(),
+                "valueC" => $answers[2]->getAnswerId(),
+                "valueD" => $answers[3]->getAnswerId(),
+            );
+
+            header('Content-Type: application/json');
+            http_response_code(200);
+
+            echo json_encode($array);
+
+        }
     }
 
 

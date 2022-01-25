@@ -1,0 +1,117 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    background: url(../img/loginPhoto.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container{
+    width: 40%;
+    height: 1000vh;
+    align-self: flex-end; 
+    background: #2b242469 0% 0% no-repeat padding-box;
+    box-shadow: inset 0px 3px 6px #2d1b1b49;
+    border: 1px solid #707070;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+p{
+    font-size: 30px;
+    text-align: center;
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+    color: blanchedalmond;
+    padding: 1em;
+    margin: 0;
+ 
+}
+
+#logo{
+    width: 80%;
+    padding: 3em;
+}
+
+#logo2{
+    width: 50%;
+    padding: 1em;
+}
+
+button{
+    background: #FEF583BF 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+
+    width: 30%;
+    color: black;
+    line-height: 3em;
+    margin: 1em;
+
+}
+
+button:hover{
+    border: 3px solid black;
+}
+
+
+input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 1em;
+    margin: 1em;
+    width: 50%;
+}
+
+.goto{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+}
+
+*{
+    font-family:Sanvito Pro Display;
+    font-size: large;
+}
+
+.no-valid{
+    border: 3px solid red;
+    border-radius: 1em;
+    outline: none;
+}
+
+@media only screen and (max-device-width:420px){
+    .login-container{
+        width: 100%;
+    }
+
+    button, p{
+        font-size: 50px;
+        border-radius: 60px;
+    }
+
+    input{
+        font-size: 50px;
+    }
+
+}

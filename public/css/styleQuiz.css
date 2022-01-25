@@ -1,0 +1,117 @@
+section{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 8%;
+    padding: 2em;
+    overflow: auto;
+    height: 70%;
+}
+
+
+
+section > div > img{
+    height: 40%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1em 1em 0 0;
+
+}
+
+.quizzes > div > div{
+    max-height: 95%;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.quizzes> div{
+    border: 1px solid gray;
+    border-radius: 2em 2em;
+    background: #FFFBE9E6 0% 0% no-repeat padding-box;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+h2{
+    font-size: x-large;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+    margin: 0.2em;
+}
+
+.quizzes{
+    font-family:Sanvito Pro Display;
+    font-size: large;
+}
+
+p{
+    border-top: 1px solid gray;
+    padding: 1em;
+    
+}
+
+.social{
+    font-size: x-large;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.social > i{
+    padding-right: 2em;
+}
+
+.quizButton{
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+    
+    color: black;
+    line-height: 3em;
+    width: 60%;
+    position: absolute;
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%);
+
+}
+
+
+section > div{
+    position: relative;
+}
+@media only screen and (max-device-width:420px){
+    
+    *{
+        font-size: large;
+
+    }
+    section{
+        grid-template-columns: 1fr;
+    }
+    h2{
+        font-size: 50px;
+    }
+    p{
+        font-size: 40px;
+    }
+    section > div > div > div >  i{
+        font-size: 40px;
+    }
+    .quizzes > div{
+        height: 60vh;
+    }
+    .quizButton{
+        font-size: 40px;
+    }
+
+    .fa-home{
+        color: wheat;
+    }
+}

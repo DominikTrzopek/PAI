@@ -1,0 +1,129 @@
+section{
+    padding: 2em;
+    overflow: hidden;
+    height: 70%;
+    width: 40%;
+}
+
+section > div{
+    border: 1px solid gray;
+    border-radius: 2em 2em;
+    background: #FFFBE9E6 0% 0% no-repeat padding-box;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section > div > div > h2{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    font-size: x-large;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0em;
+    margin: 0.2em;
+    border-bottom: 1px solid black;
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+}
+
+
+.editProfile, .editProfileCancel, .editProfileSubmit{
+    background: #FEF5838F 0% 0% no-repeat padding-box;
+    border: 3px solid #707070;
+    border-radius: 37px;
+    opacity: 1;
+
+    width: 50%;
+    color: black;
+    line-height: 3em;
+    margin: 1em;
+}
+
+.editProfile{
+
+    position: absolute;
+    bottom: 10%;
+
+}
+
+.editProfileCancel, .editProfileSubmit{
+    width: 40%;
+}
+
+.editProfileSubmit{
+    position: absolute;
+    bottom: 10%;
+}
+
+.editProfileCancel{
+    position: absolute;
+    bottom: 25%;
+}
+
+.fa-user{
+    color: wheat;
+}
+
+button:hover{
+    border: 3px solid black;
+}
+
+.edit{
+    width: 110%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.edit > h2{
+    font-family: 'American Typewriter', serif;
+    font-style: italic;
+}
+
+.edit > input{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0.5em;
+    width: 50%;
+}
+
+.no-valid{
+    border: 3px solid red !important;
+    border-radius: 10px;
+}
+
+
+@media only screen and (max-device-width:420px) {
+    section{
+        width: 80%;
+        padding: 15% 10%;
+    }
+
+    .profileInfo{
+        height: 80%;
+    }
+
+    section > div > div > h2{
+        font-size: 40px;
+        padding-top: 2em;
+    }
+
+    .editProfile{
+        font-size: 45px;
+        border-radius: 70px;
+    }
+}

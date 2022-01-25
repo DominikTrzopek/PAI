@@ -5,6 +5,7 @@ class GradesController extends DefaultController {
     public function scores(){
 
         session_start();
+        $this->checkLogin();
         $quizRepository = new QuizRepository();
         $scores = $quizRepository->getScores($_SESSION['user']);
         $scores = array_reverse($scores);
@@ -15,6 +16,7 @@ class GradesController extends DefaultController {
     public function searchScores(){
         $quizRepository = new QuizRepository();
         session_start();
+        $this->checkLogin();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {

@@ -4,6 +4,7 @@ class ProfileController extends AppController{
 
     public function viewProfile(){
         session_start();
+        $this->checkLogin();
         $userRepository = new UserRepository();
         $user = $userRepository->getUserFromId($_SESSION['user']);
         $this->render('viewProfile',['user' => $user]);
@@ -12,6 +13,7 @@ class ProfileController extends AppController{
     public function editProfile(){
 
         session_start();
+        $this->checkLogin();
         $messages[] = null;
         $userRepository = new UserRepository();
         $user = $userRepository->getUserFromId($_SESSION['user']);
@@ -46,5 +48,6 @@ class ProfileController extends AppController{
             $this->render('editProfile',['user' => $user]);
         }
     }
+
 
 }

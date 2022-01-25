@@ -56,7 +56,7 @@ p{
 }
 
 button{
-    background: #FEF5838F 0% 0% no-repeat padding-box;
+    background: #FEF583BF 0% 0% no-repeat padding-box;
     border: 3px solid #707070;
     border-radius: 37px;
     opacity: 1;
@@ -105,11 +105,13 @@ input{
         width: 100%;
     }
 
-    p{
-        font-size: 60px;
+    button, p{
+        font-size: 50px;
+        border-radius: 60px;
     }
 
-    *{
-        font-size: 36px;
+    input{
+        font-size: 50px;
     }
+
 }

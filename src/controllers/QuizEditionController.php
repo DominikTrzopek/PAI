@@ -20,14 +20,14 @@ class QuizEditionController extends AppController
 
     public function changeQuiz(){
         $quizRepository = new QuizRepository();
-
+        session_start();
+        $this->checkLogin();
         if(isset($_POST['addQuestion'])){
             $id = $_POST['addQuestion'];
             return $this->render("addQuestion", ['quiz' => $id]);
         }
         else if(isset($_POST['deleteQuestion'])){
             $id = $_POST['deleteQuestion'];
-            session_start();
             $_SESSION['quiz'] = $id;
             $questions = $quizRepository->getQuestions($id);
             return $this->render("showQuestions", ['questions' => $questions, 'quizId' => $id]);
@@ -38,7 +38,7 @@ class QuizEditionController extends AppController
             return $this->manageQuizzes();
         }
         else  if(isset($_POST['quit'])){
-            session_start();
+
             $id = $_POST['quit'];
             $quizRepository->quitQuiz($_SESSION['user'],$id);
             return $this->manageQuizzes();
@@ -75,6 +75,7 @@ class QuizEditionController extends AppController
     function search(string $cond){
         $quizRepository = new QuizRepository();
         session_start();
+        $this->checkLogin();
         $id = $_SESSION['quiz'];
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 

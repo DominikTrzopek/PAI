@@ -91,14 +91,17 @@ class QuizController extends AppController
         unset($_SESSION['questionNumber']);
         unset($_SESSION['score']);
         unset($_SESSION['quiz']);
-        setcookie("remainingTime", "", time()-3600);
-        $quizRepository = new QuizRepository();
-        $quizzes = $quizRepository->getQuizzes($_SESSION['user'],"all");
+        if(isset($_SESSION['user'])) {
+            setcookie("remainingTime", "", time() - 3600);
+            $quizRepository = new QuizRepository();
+            $quizzes = $quizRepository->getQuizzes($_SESSION['user'], "all");
+        }
         $this->render('mainPage',['quizzes' => $quizzes]);
     }
 
     public function startQuiz(){
         session_start();
+        $this->checkLogin();
         $str = $_GET['next'];
         list($quizId,$answerId) = explode(" ",$str);
 
@@ -162,7 +165,7 @@ class QuizController extends AppController
     public function nextQuestion(){
 
         session_start();
-
+        $this->checkLogin();
         $quizRepository = new QuizRepository();
         $questions = $quizRepository->getQuestions($_SESSION['quiz']);
         $allQuestions = count($questions);
@@ -217,8 +220,10 @@ class QuizController extends AppController
     }
 
     public function nextAnswers(){
+
         $quizRepository = new QuizRepository();
         session_start();
+        $this->checkLogin();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {
@@ -271,8 +276,10 @@ class QuizController extends AppController
     }
 
     public function searchQuiz(){
+
         $quizRepository = new QuizRepository();
         session_start();
+        $this->checkLogin();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {

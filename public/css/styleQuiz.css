@@ -94,7 +94,6 @@ section > div{
     }
     section{
         grid-template-columns: 1fr;
-        height: 100%;
     }
     h2{
         font-size: 50px;

@@ -161,9 +161,7 @@ button:hover{
         font-size: 50px;
     }
 
-    button:hover{
-        border: 10px solid black;
-    }
+
 
     .correct{
         border: 20px solid green !important;

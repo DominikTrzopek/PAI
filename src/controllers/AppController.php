@@ -47,4 +47,10 @@ class AppController{
 
 
     }
+
+    public function checkLogin(){
+        if(!isset($_SESSION['user'])){
+            $this->render('login',['messages'=>['Log in!']]);
+        }
+    }
 }

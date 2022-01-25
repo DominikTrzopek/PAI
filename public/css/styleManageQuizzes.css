@@ -31,7 +31,7 @@ section{
     margin-left: 5%;
     padding-right: 5%;
     border-right: 1px solid gray;
-    width: 200%;
+    width: 20em;
 
 }
 
@@ -56,7 +56,7 @@ button:hover{
 .manageButton{
     background: #FEF5838F 0% 0% no-repeat padding-box;
     border: 3px solid #707070;
-    border-radius: 1.5em;
+    border-radius: 2em;
     opacity: 1;
 
     min-width: 7em;
@@ -64,7 +64,7 @@ button:hover{
     margin: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    min-height: 60%;
+    min-height: 75%;
 }
 
 
@@ -88,6 +88,7 @@ p{
         min-width: 4em;
         min-height: unset;
         height: 50%;
+        border-radius: 1em;
     }
 
     .buttons{
